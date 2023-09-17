@@ -337,6 +337,7 @@ export default {
           toast.success("Updated successful", {
             position: toast.POSITION.TOP_RIGHT,
           });
+          this.closeModal();
         }
 
         //  this.getUsers();
