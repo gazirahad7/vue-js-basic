@@ -107,7 +107,7 @@
       />
     </div>
   </div>
-  <!-- Modal-->
+  <!--  Markup  Modal-->
   <div>
     <div class="overlay" id="overlay"></div>
 
@@ -116,7 +116,9 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Update User Info:</h5>
+            <h5 class="modal-title">
+              Update User Info for '{{ singleUser?.name }}'
+            </h5>
             <button
               type="button"
               class="close"
@@ -195,22 +197,16 @@
 import axios from "axios";
 import { toast } from "vue3-toastify";
 import Paginate from "vuejs-paginate-next";
-
-import EditUser from "./EditUser.vue";
-
 export default {
   name: "users",
 
   components: {
-    EditUser,
     paginate: Paginate,
   },
 
   data() {
     return {
       users: [],
-      // showEditModal: false,
-      //  selectedUser: null,
       singleUser: {},
       searchQuery: "",
       currentPage: 1,

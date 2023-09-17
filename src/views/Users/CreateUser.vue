@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h2>Create User</h2>
+    <h2>Create A User</h2>
 
     <form @submit.prevent="createUser">
       <div class="mb-3">
