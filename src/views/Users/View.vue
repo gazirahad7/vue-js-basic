@@ -62,27 +62,36 @@
         <!-- <tbody v-if="this.users.length > 0"> -->
         <tbody v-if="filteredUsers.length > 0">
           <!-- <tr v-for="(user, index) in this.users" :key="index"> -->
-          <tr v-for="(user, index) in paginatedUsers" :key="user.id">
-            <td>{{ index + 1 }}</td>
-            <td>{{ user.name }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ user.phone }}</td>
-            <td>{{ user.website }}</td>
 
-            <td class="text-center d-flex gap-2 justify-content-center">
-              <RouterLink :to="'/users/' + user.id" class="btn btn-success">
-                View</RouterLink
-              >
-              <!-- <edit-user :user="user" /> -->
-              <button @click="openModal(user.id)" class="btn btn-warning">
-                Edit
-              </button>
+          <TransitionGroup
+            tag=""
+            :css="true"
+            @before-enter="onBeforeEnter"
+            @enter="onEnter"
+            @leave="onLeave"
+          >
+            <tr v-for="(user, index) in paginatedUsers" :key="user.id">
+              <td>{{ index + 1 }}</td>
+              <td>{{ user.name }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.phone }}</td>
+              <td>{{ user.website }}</td>
 
-              <button @click="confirmDelete(user.id)" class="btn btn-danger">
-                Delete
-              </button>
-            </td>
-          </tr>
+              <td class="text-center d-flex gap-2 justify-content-center">
+                <RouterLink :to="'/users/' + user.id" class="btn btn-success">
+                  View</RouterLink
+                >
+                <!-- <edit-user :user="user" /> -->
+                <button @click="openModal(user.id)" class="btn btn-warning">
+                  Edit
+                </button>
+
+                <button @click="confirmDelete(user.id)" class="btn btn-danger">
+                  Delete
+                </button>
+              </td>
+            </tr>
+          </TransitionGroup>
         </tbody>
 
         <tbody v-else>
@@ -197,6 +206,9 @@
 import axios from "axios";
 import { toast } from "vue3-toastify";
 import Paginate from "vuejs-paginate-next";
+
+import gsap from "gsap";
+
 export default {
   name: "users",
 
@@ -368,6 +380,29 @@ export default {
         }
 
         return this.sortOrder === "desc" ? comparison * -1 : comparison;
+      });
+    },
+
+    onBeforeEnter(el) {
+      el.style.opacity = 0;
+      //el.style.height = 0;
+    },
+
+    onEnter(el, done) {
+      gsap.to(el, {
+        opacity: 1,
+        // height: "1.6em",
+        delay: el.dataset.index * 0.15,
+        onComplete: done,
+      });
+    },
+
+    onLeave(el, done) {
+      gsap.to(el, {
+        opacity: 0,
+        // height: 0,
+        delay: el.dataset.index * 0.15,
+        onComplete: done,
       });
     },
   },
