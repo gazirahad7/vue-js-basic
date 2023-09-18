@@ -3,7 +3,7 @@
     <div class="d-flex justify-content-between my-5 py-3">
       <h2>Users</h2>
 
-      <RouterLink to="/users/create" class="btn btn-primary pt-2">
+      <RouterLink to="/users/create" class="btn btn-primary pt-2 px-3">
         Add New Users</RouterLink
       >
     </div>

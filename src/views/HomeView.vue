@@ -1,6 +1,11 @@
 <template>
   <main>
-    <h1 class="text-primary">This is home page</h1>
+    <h1 ref="title" class="text-primary">This is home page</h1>
+
+    <p>Default : {{ name }} and {{ age }}</p>
+    <p>Refs: {{ nameRef }}</p>
+
+    <button class="btn btn-info" @click="handleClick">Change Title</button>
 
     <ParentComponent />
 
@@ -45,6 +50,7 @@
   </main>
 </template>
 <script>
+import { ref } from "vue";
 import ParentComponent from "../components/ParentComponent.vue";
 export default {
   el: "#app",
@@ -52,8 +58,30 @@ export default {
     ParentComponent,
   },
 
+  setup() {
+    console.log("setup");
+
+    let name = "Gazi Rahad";
+    const age = 24;
+    const title = ref(null);
+
+    let nameRef = ref("Name Reactive");
+    console.log(title.value);
+
+    const handleClick = () => {
+      console.log(title, title.value);
+      title.value.classList.add("bg-danger");
+      title.value.textContent = "Change title ";
+      nameRef.value = "Yes its reactive";
+    };
+
+    return { name, age, title, nameRef, handleClick };
+  },
+
   methods: {
     openModal() {
+      console.log("modal");
+
       const modal = document.getElementById("myModal");
       modal.classList.add("show");
       modal.style.display = "block";
@@ -84,16 +112,10 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(
-    0,
-    0,
-    0,
-    0.5
-  ); /* Adjust the color and opacity as needed */
-  z-index: 9999; /* Ensure the overlay is above everything else */
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
 }
-
 .modal {
-  z-index: 10000; /* Ensure the modal is above the overlay */
+  z-index: 10000;
 }
 </style>
